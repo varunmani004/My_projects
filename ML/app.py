@@ -18,9 +18,9 @@ try:
     if model_choice == "Random Forest":
         model = joblib.load(r"ML/random_forest.pkl")
     elif model_choice == "Lasso":
-        model = joblib.load(r"ML\lasso_model.pkl")
+        model = joblib.load(r"ML/lasso_model.pkl")
     elif model_choice == "XGBoost":
-        model = joblib.load(r"ML\xgboost_model.pkl")
+        model = joblib.load(r"ML/xgboost_model.pkl")
 except FileNotFoundError:
     st.error("⚠️ Model file not found! Please make sure the model `.pkl` files are in the same directory.")
     st.stop()
@@ -36,7 +36,7 @@ if uploaded_file is not None:
 else:
     st.info("No CSV uploaded. Using default sample data.")
     try:
-        df = pd.read_csv(r"ML\gold_price_data.csv")
+        df = pd.read_csv(r"ML/gold_price_data.csv")
     except:
         st.error("⚠️ sample_gold_data.csv not found.")
         st.stop()
@@ -83,7 +83,7 @@ if st.button("🎯 Predict Manually"):
 
 # Sample CSV download
 try:
-    with open(r"ML\gold_price_data.csv", "rb") as file:
+    with open(r"ML/gold_price_data.csv", "rb") as file:
         st.download_button("📥 Download Sample CSV", file,
                            file_name="sample_gold_data.csv", mime="text/csv")
 except:
