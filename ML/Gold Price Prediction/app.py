@@ -10,7 +10,7 @@ st.write("Upload your CSV file or enter values manually to predict the gold pric
 
 # Load Random Forest model
 try:
-    model = joblib.load(r"ML/random_forest.pkl")
+    model = joblib.load(r"ML/Gold Price Prediction/random_forest.pkl")
 except FileNotFoundError:
     st.error(
         "⚠️ Random Forest model not found! Please ensure 'random_forest.pkl' is in the ML folder.")
@@ -28,7 +28,7 @@ if uploaded_file is not None:
 else:
     st.info("No CSV uploaded. Using default sample data.")
     try:
-        df = pd.read_csv(r"ML/gold_price_data.csv")
+        df = pd.read_csv(r"ML/Gold Price Prediction/gold_price_data.csv")
     except:
         st.error("⚠️ gold_price_data.csv not found.")
         st.stop()
@@ -74,7 +74,7 @@ if st.button("🎯 Predict Manually"):
 
 # Sample CSV download
 try:
-    with open(r"ML/gold_price_data.csv", "rb") as file:
+    with open(r"ML/Gold Price Prediction/gold_price_data.csv", "rb") as file:
         st.download_button("📥 Download Sample CSV", file,
                            file_name="sample_gold_data.csv", mime="text/csv")
 except:
