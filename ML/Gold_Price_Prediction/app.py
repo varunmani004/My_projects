@@ -28,7 +28,7 @@ if uploaded_file is not None:
 else:
     st.info("No CSV uploaded. Using default sample data.")
     try:
-        df = pd.read_csv(r"ML/Gold_Price_Prediction/gold_price_data.csv")
+        df = pd.read_csv(r"ML/Gold_Price_Prediction/gold_price.csv")
     except:
         st.error("⚠️ gold_price_data.csv not found.")
         st.stop()
@@ -74,7 +74,7 @@ if st.button("🎯 Predict Manually"):
 
 # Sample CSV download
 try:
-    with open(r"ML/Gold_Price_Prediction/gold_price_data.csv", "rb") as file:
+    with open(r"ML/Gold_Price_Prediction/gold_price.csv", "rb") as file:
         st.download_button("📥 Download Sample CSV", file,
                            file_name="sample_gold_data.csv", mime="text/csv")
 except:
