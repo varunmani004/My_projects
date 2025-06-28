@@ -9,12 +9,13 @@ st.title("💰 Gold Price Prediction Web App")
 st.write("Upload your CSV file or enter values manually to predict the gold price using a trained Random Forest model.")
 # Manual input
 st.markdown("---")
-st.subheader("🔢 Or Enter Values Manually")
+st.subheader("🔢 Enter Values Manually")
 
 spx = st.number_input("SPX (S&P 500 Index)", value=1400.0)
 uso = st.number_input("USO (Oil Price)", value=12.0)
 slv = st.number_input("SLV (Silver Price)", value=16.0)
 eurusd = st.number_input("EUR/USD Exchange Rate", value=1.2)
+st.title("OR")
 
 if st.button("🎯 Predict Manually"):
     input_data = pd.DataFrame([[spx, uso, slv, eurusd]], columns=feature_cols)
