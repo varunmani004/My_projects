@@ -17,7 +17,7 @@ model_choice = st.selectbox(
 try:
     if model_choice == "Random Forest":
         model = joblib.load(
-            r"C:\pross\git Repo\My_projects\ML\random_forest.pkl")
+            r"ML/random_forest.pkl")
     elif model_choice == "Lasso":
         model = joblib.load(
             r"C:\pross\git Repo\My_projects\ML\lasso_model.pkl")
