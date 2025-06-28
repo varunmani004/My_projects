@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Your Product</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('bg1.png') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+        }
+        .preview-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: white;
+        }
+        .preview-text {
+            position: absolute;
+            font-size: 18px;
+            font-weight: bold;
+            color: black;
+        }
+        img.preview-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        /* Product Specific Styles */
+        .cup-preview {
+            border-radius: 50%;
+            width: 250px;
+            height: 250px;
+        }
+        .tshirt-preview {
+            width: 280px;
+            height: 280px;
+        }
+        .keychain-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Customize Your <span id="productName"></span></h2>
+        <p class="text-center"><strong>Price: ₹<span id="productPrice"></span></strong></p>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <label class="form-label">Upload Your Image:</label>
+                <input type="file" id="imageUpload" class="form-control" accept="image/*">
+                
+                <label class="form-label mt-3">Enter Your Text:</label>
+                <input type="text" id="customText" class="form-control" placeholder="Your text here">
+                
+                <button class="btn btn-primary mt-3" onclick="confirmCustomization()">Confirm Customization</button>
+            </div>
+
+            <div class="col-md-6 text-center">
+                <h5>Preview</h5>
+                <div id="previewContainer" class="preview-container">
+                    <span class="preview-text" id="previewText"></span>
+                    <img src="" id="previewImage" class="preview-image">
+                </div>
+            </div>
+        </div>
+
+        <a href="cart.html" class="btn btn-secondary mt-3">Back to Cart</a>
+    </div>
+
+    <!-- Customization Confirmation Popup (Bootstrap Modal) -->
+    <div class="modal fade" id="customizationModal" tabindex="-1" aria-labelledby="customizationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="customizationModalLabel">Customization Confirmed!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Custom Text:</strong> <span id="modalText"></span></p>
+                    <p><strong>Custom Image:</strong></p>
+                    <img id="modalImage" class="img-fluid" style="max-width: 100%; border: 1px solid #ddd; padding: 5px;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="redirectToCart()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get selected product details from localStorage
+        let productName = localStorage.getItem("selectedProduct");
+        let productPrice = localStorage.getItem("selectedPrice");
+
+        document.getElementById("productName").textContent = productName;
+        document.getElementById("productPrice").textContent = productPrice;
+
+        // Set Preview Shape Based on Product
+        let previewContainer = document.getElementById("previewContainer");
+        
+        if (productName.includes("Cup")) {
+            previewContainer.classList.add("cup-preview");
+        } else if (productName.includes("T-Shirt")) {
+            previewContainer.classList.add("tshirt-preview");
+        } else if (productName.includes("Keychain")) {
+            previewContainer.classList.add("keychain-preview");
+        }
+
+        // Image Upload Preview
+        document.getElementById("imageUpload").addEventListener("change", function(event) {
+            let file = event.target.files[0];
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let img = document.getElementById("previewImage");
+                img.src = e.target.result;
+                img.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Text Preview
+        document.getElementById("customText").addEventListener("input", function() {
+            document.getElementById("previewText").textContent = this.value;
+        });
+
+        // Confirm Customization Function
+        function confirmCustomization() {
+            let customText = document.getElementById("customText").value;
+            let customImage = document.getElementById("previewImage").src;
+
+            // Save Customization Details in LocalStorage
+            localStorage.setItem("customText", customText);
+            localStorage.setItem("customImage", customImage);
+
+            // Show the Popup with Customization Details
+            document.getElementById("modalText").textContent = customText;
+            document.getElementById("modalImage").src = customImage;
+
+            // Show Bootstrap Modal
+            let modal = new bootstrap.Modal(document.getElementById('customizationModal'));
+            modal.show();
+        }
+
+        // Redirect to Cart after Popup Confirmation
+        function redirectToCart() {
+            window.location.href = "cart.html";
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
