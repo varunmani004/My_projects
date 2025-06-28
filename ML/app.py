@@ -6,27 +6,22 @@ import joblib
 # Page setup
 st.set_page_config(page_title="💰 Gold Price Predictor", layout="centered")
 st.title("💰 Gold Price Prediction Web App")
-st.write("Upload your CSV file or enter values manually to predict the gold price using ML models.")
+st.write("Upload your CSV file or enter values manually to predict the gold price using a trained Random Forest model.")
 
-# Model selection
-st.subheader("⚙️ Select a Model")
-model_choice = st.selectbox(
-    "Choose a model", ["Random Forest", "Lasso", "XGBoost"])
-
-# Load model
+# Load Random Forest model
 try:
-    if model_choice == "Random Forest":
-        model = joblib.load(r"ML/random_forest.pkl")
-
+    model = joblib.load(r"ML/random_forest.pkl")
 except FileNotFoundError:
-    st.error("⚠️ Model file not found! Please make sure the model `.pkl` files are in the same directory.")
+    st.error(
+        "⚠️ Random Forest model not found! Please ensure 'random_forest.pkl' is in the ML folder.")
     st.stop()
 
 # Upload section
 st.subheader("📤 Upload a CSV File (Optional)")
 uploaded_file = st.file_uploader(
-    "Upload CSV with columns: SPX, USO, SLV, EUR/USD", type=["csv"])
+    "Upload a CSV with columns: SPX, USO, SLV, EUR/USD", type=["csv"])
 
+# Load data (uploaded or default)
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     st.write("✅ Uploaded Data Preview:")
@@ -35,10 +30,9 @@ else:
     try:
         df = pd.read_csv(r"ML/gold_price_data.csv")
     except:
-        st.error("⚠️ sample_gold_data.csv not found.")
+        st.error("⚠️ gold_price_data.csv not found.")
         st.stop()
 
-# Show data preview
 st.write(df.head())
 
 # Predict from file data
@@ -52,14 +46,14 @@ try:
     st.write(df[['Predicted Gold Price']].head())
     st.line_chart(df[['Predicted Gold Price']])
 
-    # Download button
+    # Download prediction CSV
     csv = df.to_csv(index=False).encode('utf-8')
     st.download_button("⬇️ Download Predictions as CSV", data=csv,
                        file_name='predicted_gold_prices.csv', mime='text/csv')
 
 except Exception as e:
-    st.error(f"⚠️ Prediction error from file: {e}")
-    st.info("Make sure your CSV has the required columns: SPX, USO, SLV, EUR/USD")
+    st.error(f"⚠️ Prediction error: {e}")
+    st.info("Ensure your CSV has: SPX, USO, SLV, EUR/USD")
 
 # Manual input
 st.markdown("---")
