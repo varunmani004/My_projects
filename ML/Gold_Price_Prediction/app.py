@@ -7,6 +7,22 @@ import joblib
 st.set_page_config(page_title="💰 Gold Price Predictor", layout="centered")
 st.title("💰 Gold Price Prediction Web App")
 st.write("Upload your CSV file or enter values manually to predict the gold price using a trained Random Forest model.")
+# Manual input
+st.markdown("---")
+st.subheader("🔢 Or Enter Values Manually")
+
+spx = st.number_input("SPX (S&P 500 Index)", value=1400.0)
+uso = st.number_input("USO (Oil Price)", value=12.0)
+slv = st.number_input("SLV (Silver Price)", value=16.0)
+eurusd = st.number_input("EUR/USD Exchange Rate", value=1.2)
+
+if st.button("🎯 Predict Manually"):
+    input_data = pd.DataFrame([[spx, uso, slv, eurusd]], columns=feature_cols)
+    try:
+        prediction = model.predict(input_data)[0]
+        st.success(f"💰 Predicted Gold Price: {prediction:.2f}")
+    except Exception as e:
+        st.error(f"⚠️ Manual prediction error: {e}")
 
 # Load Random Forest model
 try:
@@ -55,22 +71,6 @@ except Exception as e:
     st.error(f"⚠️ Prediction error: {e}")
     st.info("Ensure your CSV has: SPX, USO, SLV, EUR/USD")
 
-# Manual input
-st.markdown("---")
-st.subheader("🔢 Or Enter Values Manually")
-
-spx = st.number_input("SPX (S&P 500 Index)", value=1400.0)
-uso = st.number_input("USO (Oil Price)", value=12.0)
-slv = st.number_input("SLV (Silver Price)", value=16.0)
-eurusd = st.number_input("EUR/USD Exchange Rate", value=1.2)
-
-if st.button("🎯 Predict Manually"):
-    input_data = pd.DataFrame([[spx, uso, slv, eurusd]], columns=feature_cols)
-    try:
-        prediction = model.predict(input_data)[0]
-        st.success(f"💰 Predicted Gold Price: {prediction:.2f}")
-    except Exception as e:
-        st.error(f"⚠️ Manual prediction error: {e}")
 
 # Sample CSV download
 try:
