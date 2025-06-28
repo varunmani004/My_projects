@@ -17,10 +17,7 @@ model_choice = st.selectbox(
 try:
     if model_choice == "Random Forest":
         model = joblib.load(r"ML/random_forest.pkl")
-    elif model_choice == "Lasso":
-        model = joblib.load(r"ML/lasso_model.pkl")
-    elif model_choice == "XGBoost":
-        model = joblib.load(r"ML/xgboost_model.pkl")
+
 except FileNotFoundError:
     st.error("⚠️ Model file not found! Please make sure the model `.pkl` files are in the same directory.")
     st.stop()
