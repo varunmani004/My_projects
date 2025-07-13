@@ -1,12 +1,13 @@
 import streamlit as st
 from coding_data import coding_questions
 
+
 # --- Background Image with Strong Blur ---
 page_bg_blur = """
 <style>
 /* Background image */
 [data-testid="stAppViewContainer"] {
-    background-image: url("https://images.unsplash.com/photo-1610431242253-d7791b216b61?auto=format&fit=crop&w=1470&q=80");
+    background-image: url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -21,8 +22,8 @@ page_bg_blur = """
     left: 0;
     height: 100%;
     width: 100%;
-    backdrop-filter: blur(10px);
-    background-color: rgba(0,0,0,0.3);
+    backdrop-filter: blur(12px);  /* Increased from 6px to 12px */
+    background-color: rgba(0,0,0,0.3);  /* Optional: subtle dark overlay */
     z-index: -1;
 }
 
@@ -46,9 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 </style>
 """
 
-# ✅ Apply the background style AFTER defining it
 st.markdown(page_bg_blur, unsafe_allow_html=True)
-
 # --- Title & Input ---
 st.title("🧠 Coding Practice Chatbot")
 st.markdown("Ask me a coding question:")
