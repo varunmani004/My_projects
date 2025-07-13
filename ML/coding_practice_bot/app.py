@@ -53,6 +53,9 @@ st.markdown(page_bg_blur, unsafe_allow_html=True)
 st.title("🧠 Coding Practice Chatbot")
 st.markdown("Ask me a coding question:")
 user_input = st.text_input("")
+st.caption(
+    "Try typing things like 'prime', 'palindrome', or 'greatest of 3 numbers'")
+
 
 # --- Download Button Function ---
 def generate_download_button(code_str, filename):
@@ -62,6 +65,7 @@ def generate_download_button(code_str, filename):
         file_name=filename,
         mime="text/plain"
     )
+
 
 # --- Chatbot Logic ---
 if user_input:
@@ -75,4 +79,5 @@ if user_input:
             found = True
             break
     if not found:
-        st.warning("❌ Sorry, I don't know that yet. Try asking for 'Palindrome' or 'Prime number check'.")
+        st.warning(
+            "❌ Sorry, I don't know that yet. Try asking for 'Palindrome' or 'Prime number check'.")
