@@ -21,8 +21,8 @@ page_bg_blur = """
     left: 0;
     height: 100%;
     width: 100%;
-    backdrop-filter: blur(10px);  /* Increased from 6px to 12px */
-    background-color: rgba(0,0,0,0.3);  /* Optional: subtle dark overlay */
+    backdrop-filter: blur(10px);
+    background-color: rgba(0,0,0,0.3);
     z-index: -1;
 }
 
@@ -46,6 +46,7 @@ h1, h2, h3, h4, h5, h6 {
 </style>
 """
 
+# ✅ Apply the background style AFTER defining it
 st.markdown(page_bg_blur, unsafe_allow_html=True)
 
 # --- Title & Input ---
@@ -53,10 +54,7 @@ st.title("🧠 Coding Practice Chatbot")
 st.markdown("Ask me a coding question:")
 user_input = st.text_input("")
 
-
 # --- Download Button Function ---
-
-
 def generate_download_button(code_str, filename):
     st.download_button(
         label="📥 Download Code",
@@ -64,7 +62,6 @@ def generate_download_button(code_str, filename):
         file_name=filename,
         mime="text/plain"
     )
-
 
 # --- Chatbot Logic ---
 if user_input:
@@ -78,5 +75,4 @@ if user_input:
             found = True
             break
     if not found:
-        st.warning(
-            "❌ Sorry, I don't know that yet. Try asking for 'Palindrome' or 'Prime number check'.")
+        st.warning("❌ Sorry, I don't know that yet. Try asking for 'Palindrome' or 'Prime number check'.")
